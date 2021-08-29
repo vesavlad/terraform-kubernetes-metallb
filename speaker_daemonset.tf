@@ -1,5 +1,14 @@
 # Create Speaker DaemonSet
 resource "kubernetes_daemonset" "speaker" {
+  
+  # Workaround for the bug when port is always detected as changed
+  lifecycle {
+      ignore_changes = [
+          spec[0].template[0].spec[0].container[0].port[1].host_port,
+          spec[0].template[0].spec[0].container[0].port[2].host_port
+      ]
+  }  
+  
   metadata {
     labels = {
       app       = "metallb"
