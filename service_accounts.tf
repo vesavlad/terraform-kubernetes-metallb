@@ -1,5 +1,10 @@
 # Create Controller Service Account
 resource "kubernetes_service_account" "controller" {
+  lifecycle {
+    ignore_changes = [
+      secret
+    ]
+  }
   metadata {
     labels = {
       app = "metallb"
@@ -11,6 +16,11 @@ resource "kubernetes_service_account" "controller" {
 
 # Create Speaker Service Account
 resource "kubernetes_service_account" "speaker" {
+  lifecycle {
+    ignore_changes = [
+      secret
+    ]
+  }
   metadata {
     labels = {
       app = "metallb"
